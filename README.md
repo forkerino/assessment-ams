@@ -29,7 +29,7 @@ Toon aan dat je in staat bent om een Django-webapplicatie op te zetten in combin
   - Gebruik GeoDjango om georuimtelijke query's en opslag te beheren.
 - Implementeer een **GET API endpoint** waarmee gebruikers een lijst van opgeslagen geolocaties kunnen ophalen, eventueel gefilterd op gebruiker (als authenticatie wordt toegevoegd).
 - Voeg filtering toe op basis van afstand. Bijvoorbeeld: laat geolocaties binnen een bepaald straalbereik van een opgegeven punt zien.
-- Bedenk een methode om dynamisch views te maken op basis van datamodellen die door gebruikers worden aangeleverd (bijvoorbeeld via een configuratiebestand).
+- Bedenk een methode om dynamisch views te maken op basis van datamodellen die door gebruikers worden aangeleverd (bijvoorbeeld via een configuratiebestand) Zodat voor elk model een eigen endpoint wordt gemaakt.
 
 ### 4. Eindresultaat
 - Lever een werkende applicatie op die gestart kan worden met Docker Compose.
