@@ -6,6 +6,7 @@ Toon aan dat je in staat bent om een Django-webapplicatie op te zetten in combin
 ## Opdrachtomschrijving
 
 ### 1. Setup:
+- Maal een .env file aan op basis van de .env.example file.
 - Run `docker compose build`
 - Run `docker compose up`
 - Run `docker compose exec web python manage.py migrate`
