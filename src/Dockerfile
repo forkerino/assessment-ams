@@ -25,7 +25,7 @@ COPY --from=builder /usr/local/lib/python3.11/site-packages/ /usr/local/lib/pyth
 WORKDIR /code
 COPY . /code
 
-ENV DJANGO_SETTINGS_MODULE=assesment.settings DJANGO_DEBUG=true STATIC_DIR=/static
+ENV DJANGO_SETTINGS_MODULE=assessment.settings DJANGO_DEBUG=true STATIC_DIR=/static
 RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
