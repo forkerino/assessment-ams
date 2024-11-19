@@ -13,3 +13,18 @@ class GeoLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = GeoLocation
         fields = ["id", "user", "location", "timestamp"]
+
+    def validate_location(self, value):
+        lat = value.y
+        lon = value.x
+
+        if lat < -90 or lat > 90:
+            raise serializers.ValidationError(
+                "Invalid latitude, must be between -90 an 90"
+            )
+
+        if lon < -180 or lon > 180:
+            raise serializers.ValidationError(
+                "Invalid longitude, must be between -180 and 180"
+            )
+        return value
