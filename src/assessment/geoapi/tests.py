@@ -36,13 +36,16 @@ class GeoLocationApiTestCase(TestCase):
             username="Joe", email="joe@joe.com", is_superuser=True
         )
         self.user = User.objects.create(username="John", email="john@john.com")
-        self.view = GeoLocationViewset.as_view({"get": "list", "post": "create"})
+        self.view = GeoLocationViewset.as_view(
+            actions={"get": "list", "post": "create"}
+        )
         GeoLocation.objects.create(
             location=GEOSGeometry("POINT(4.8 52.6)"), user=self.user
         )
         GeoLocation.objects.create(
             location=GEOSGeometry("POINT(4.7 52.5)"), user=self.admin
         )
+        GeoLocation.objects.create(location=GEOSGeometry("POINT(4.6 52.7)"), user=None)
 
     def test_can_create_geo_location_without_user(self):
         self.factory.post(
@@ -57,10 +60,18 @@ class GeoLocationApiTestCase(TestCase):
         request = self.factory.get("/geolocations/")
         force_authenticate(request, user=self.admin)
         response = self.view(request)
-        ### etc.
+        response.render()
+        self.assertEqual(len(response.data), 3)
 
     def test_can_list_users_points(self):
-        pass
+        request = self.factory.get("/geolocations/")
+        force_authenticate(request, user=self.user)
+        response = self.view(request)
+        response.render()
+        self.assertEqual(len(response.data), 2)
 
     def test_can_list_points_without_user_if_unauthorized(self):
-        pass
+        request = self.factory.get("/geolocations/")
+        response = self.view(request)
+        response.render()
+        self.assertEqual(len(response.data), 1)

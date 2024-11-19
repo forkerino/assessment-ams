@@ -26,9 +26,8 @@ Ik heb een validator functie toegevoegd om te checken of de coordinaten
 binnen de normale grenzen vallen (default SRID 4326).
 
 ### Tests
-Ik heb een aantal tests geschreven, maar kwam wat issues tegen bij het
-schrijven van tests voor de API endpoints. Deze heb ik wel handmatig
-getest maar de geautomatiseerde tests kreeg ik niet op tijd af.
+Ik heb een aantal tests geschreven, alleen niet voor de query param
+filters.
 
 ## Configuratiebestand
 _"Bedenk een methode om dynamisch views te maken op basis van datamodellen die door gebruikers worden aangeleverd (bijvoorbeeld via een configuratiebestand) Zodat voor elk model een eigen endpoint wordt gemaakt."_
