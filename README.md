@@ -6,7 +6,7 @@ Toon aan dat je in staat bent om een Django-webapplicatie op te zetten in combin
 ## Opdrachtomschrijving
 
 ### 1. Setup:
-- Maal een .env file aan op basis van de .env.example file.
+- Maak een .env file aan op basis van de .env.example file.
 - Run `docker compose build`
 - Run `docker compose up`
 - Run `docker compose exec web python manage.py migrate`
@@ -21,7 +21,6 @@ Toon aan dat je in staat bent om een Django-webapplicatie op te zetten in combin
 
 #### Vereisten:
 - Gebruik GeoDjango's `PointField` om locatiegegevens (latitude, longitude) op te slaan.
-- Pas de settings aan om PostGIS als database-extensie te gebruiken voor georuimtelijke data.
 
 ### 3. API-functionaliteit
 - Implementeer een **POST API endpoint** waar gebruikers hun geolocatie (latitude en longitude) kunnen indienen.
