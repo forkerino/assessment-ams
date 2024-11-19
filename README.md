@@ -44,5 +44,5 @@ django app kan worden gebouwd.
 5. script schrijven wat deze templates gebruikt om de code op te
 zetten, de migraties te bouwen en runnen, en te registreren zodat
 django alles kan vinden.
-6. iets als een github actie om de boel te kunnen deployen (in ieder
-geval) op een staging server.
+6. script om een pull request te maken en iets als een github actie om
+de boel te kunnen deployen (in ieder geval) op een staging server.
