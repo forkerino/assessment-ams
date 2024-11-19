@@ -1,44 +1,48 @@
-# Assessment Opdracht
+# Assessment
+## Aanpak en ontwerpkeuzes
+### Model
+Er is een eenvoudig model met een PointField, een DateTimeField, en een
+ForeignKey naar een User.
 
-## Doel van de opdracht:
-Toon aan dat je in staat bent om een Django-webapplicatie op te zetten in combinatie met Django REST Framework voor het opslaan van geolocatiegegevens. 
+### View
+Ik koos voor een ModelViewSet van DJRF, omdat deze de mogelijkheid
+heeft om zowel GET als POST routes te beschrijven.
 
-## Opdrachtomschrijving
+De get_queryset bevat filters om de geo-punten te filteren op user:
+- superusers zien alles
+- gewone users zien hun eigen punten en punten zonder user
+- anonieme users zien alleen punten zonder user
 
-### 1. Setup:
-- Maak een .env file aan op basis van de .env.example file.
-- Run `docker compose build`
-- Run `docker compose up`
-- Run `docker compose exec web python manage.py migrate`
-- Run `docker compose restart`
+Daarnaast kan de gebruiker query parameters meegeven in de request
+(lat, lon, distance), om te filteren op punten die binnen <distance>
+meters van (lat,lon) liggen.
 
+### Serializer
+Ik heb een externe library gebruikt voor het omvormen van coordinaten
+-strings naar een Point. Daarin zit al validatie voor het bestaan van
+zowel een latitude als longitude.
 
-### 2. Applicatiestructuur
-- Maak in de geoapi app een model dat geolocatiegegevens opslaat, bestaande uit de volgende velden:
-  - `location` (PointField - een geometrisch punt dat latitude en longitude opslaat)
-  - `timestamp` (datetime)
-  - `user` (optionele foreign key naar een user model, indien authenticatie wordt toegevoegd)
+Ik heb een validator functie toegevoegd om te checken of de coordinaten
+binnen de normale grenzen vallen (default SRID 4326).
 
-#### Vereisten:
-- Gebruik GeoDjango's `PointField` om locatiegegevens (latitude, longitude) op te slaan.
+### Tests
+Ik heb een aantal tests geschreven, maar kwam wat issues tegen bij het
+schrijven van tests voor de API endpoints. Deze heb ik wel handmatig
+getest maar de geautomatiseerde tests kreeg ik niet op tijd af.
 
-### 3. API-functionaliteit
-- Implementeer een **POST API endpoint** waar gebruikers hun geolocatie (latitude en longitude) kunnen indienen.
-  - De API moet valideren dat de locatiegegevens geldig zijn.
-  - Gebruik GeoDjango om georuimtelijke query's en opslag te beheren.
-- Implementeer een **GET API endpoint** waarmee gebruikers een lijst van opgeslagen geolocaties kunnen ophalen, eventueel gefilterd op gebruiker (als authenticatie wordt toegevoegd).
-- Voeg filtering toe op basis van afstand. Bijvoorbeeld: laat geolocaties binnen een bepaald straalbereik van een opgegeven punt zien.
-- Bedenk een methode om dynamisch views te maken op basis van datamodellen die door gebruikers worden aangeleverd (bijvoorbeeld via een configuratiebestand) Zodat voor elk model een eigen endpoint wordt gemaakt.
+## Configuratiebestand
+_"Bedenk een methode om dynamisch views te maken op basis van datamodellen die door gebruikers worden aangeleverd (bijvoorbeeld via een configuratiebestand) Zodat voor elk model een eigen endpoint wordt gemaakt."_
 
-### 4. Eindresultaat
-- Lever een werkende applicatie op die gestart kan worden met Docker Compose.
-- Alle vereiste API endpoints moeten functioneel zijn en correct getest.
-
-## Criteria voor beoordeling:
-- Correctheid van de implementatie.
-- Structuur en leesbaarheid van de code.
-- Gebruik van Django REST Framework voor het implementeren van API endpoints.
-
-## Levering:
-- Een link naar een publiek beschikbare repository (bijv. GitHub, GitLab) waarin de code staat, inclusief de Docker-configuratie.
-- Een korte beschrijving van je aanpak en uitleg van ontwerpkeuzes in de `README.md`.
+Mijn aanpak hierin zou ongeveer als volgt zijn:
+1. vaststellen van de vorm van het configuratiebestand (type velden,
+structuur, etc.)
+2. upload-functie implementeren waar de gebruiker het bestand kan
+uploaden
+3. validatie van het bestand op basis van de DSL van punt 1.
+4. templates schrijven voor modelen op basis waarvan een nieuwe
+django app kan worden gebouwd.
+5. script schrijven wat deze templates gebruikt om de code op te
+zetten, de migraties te bouwen en runnen, en te registreren zodat
+django alles kan vinden.
+6. iets als een github actie om de boel te kunnen deployen (in ieder
+geval) op een staging server.
