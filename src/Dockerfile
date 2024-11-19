@@ -3,8 +3,7 @@ FROM python:3.11-slim-bullseye AS builder
 COPY requirements.txt .
 RUN apt update && apt install --no-install-recommends -y \
     build-essential \
-    libgeos-dev \
-    libpq-dev
+    libpq-dev 
 RUN python -m pip install uwsgi
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
@@ -13,7 +12,9 @@ FROM python:3.11-slim-bullseye
 RUN apt update && apt install --no-install-recommends -y \
     curl \
     libgdal28 \
-    libgeos-c1v5 \
+    gdal-bin \
+    libgdal-dev \
+    libgeos-dev \
     libpq5 \
     media-types \
     netcat-openbsd
