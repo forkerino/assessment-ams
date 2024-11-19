@@ -4,5 +4,5 @@ from django.db import models
 
 class GeoLocation(models.Model):
     location = geo_models.PointField()
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
